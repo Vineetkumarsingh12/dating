@@ -4,8 +4,7 @@ import { User } from "../model/user.js";
 
 const isAuthenticated = async(req, res, next) => {
     try{
-    
-    console.log(req.cookies["rocket-token"]);
+
   const token = req.cookies["rocket-token"];
   if (!token)
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -13,6 +12,7 @@ const isAuthenticated = async(req, res, next) => {
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
   req._id = decodedData._id;
+  req.gender=decodedData.gender;
 
   next();
     }catch(err){

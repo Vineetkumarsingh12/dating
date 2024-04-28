@@ -5,6 +5,7 @@ import {confession} from "../model/confess.js";
 
 
 
+
 // update personality
 
 export const updatePersonality = async(req,res) => {
@@ -49,15 +50,6 @@ export const personality=async(req,res)=>{
 
 
 
-export const allUser=async(req,res)=>{
-    try{
-        const user=await User.find().populate('personality').select('-password');
-
-        return res.status(200).json({success:true,data:user});
-    }catch(err){
-        return res.status(500).json({success:false,message:"Something went wrong"});
-    }
-}
 
 
 
@@ -66,6 +58,7 @@ export const allUser=async(req,res)=>{
 export const allConfession=async(req,res)=>{
     try{
         const confessionData=await confession.find();
+        console.log("confession",confessionData);
         return res.status(200).json({success:true,data:confessionData});
     }catch(err){
         return res.status(500).json({success:false,message:"Something went wrong"});
@@ -78,6 +71,7 @@ export const allConfession=async(req,res)=>{
         try{
           
             const confessionData=await confession.find({confessBy:req._id});
+            console.log("confession",confessionData);
             return res.status(200).json({success:true,data:confessionData});
         }catch(err){
             return res.status(500).json({success:false,message:"Something went wrong"});
@@ -90,30 +84,36 @@ export const allConfession=async(req,res)=>{
     export const confessTo=async(req,res)=>{
         try{
             const {description,confessTo}=req.body;
+            console.log(req.body);
+
            
             // check if confessTo is valid user
          const user=await User.findById(confessTo);
             if(!user) return res.status(400).json({success:false,message:"User not found"});
-
-
+            const gender=user.gender;
+            if(req.gender==gender) return res.status(400).json({success:false,message:"You can only confess to opposite gender "});
+      
+console.log("pass1");
             // check if confessTo is same as confessBy
-            if(req._id===confessTo) return res.status(400).json({success:false,message:"You can't confess to yourself"});
+            if(req._id==confessTo) return res.status(400).json({success:false,message:"You can't confess to yourself"});
+            console.log("pass2");
 
             // check if confessTo is already confessed
             const confess=await confession.findOne({confessTo,confessBy:req._id});
-
+            console.log("pass3");
             if(confess) return res.status(400).json({success:false,message:"You have already confessed to this user"});
+            console.log("pass4");
 
             // create confession
             const confessData=await confession.create({description,confessBy:req._id,confessTo});
-
+            console.log("pass5");
             //   check if confessTo is already confessed
             const confess2=await confession.findOne({confessTo:req._id,confessBy:confessTo});
-
+            console.log("pass6");
             if(confess2){
                 //send mail to all  user.
             }
-
+  console.log("confession",confessData);
             return res.status(200).json({success:true,data:confessData});
         }catch(err){
             return res.status(500).json({success:false,message:"Something went wrong"});
@@ -121,7 +121,46 @@ export const allConfession=async(req,res)=>{
     }
 
 
-    // get user of similar personality
+    // sort user by similar personality
+
+
+    
+    export const similarPersonality = async (req, res) => {
+        try {
+         // find all user not equal to current user
+         console.log("current user",req._id);
+         const users = await User.find({ _id: { $ne: req._id },gender:{$ne:req.gender}}).select('-password');
+
+          return res.status(200).json({ success: true, data: users });
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+
+    export const allUser = async (req, res) => {
+        try {
+         // find all user not equal to current user
+         console.log("current user",req._id);
+         const users = await User.find({ _id: { $ne: req._id }}).select('-password');
+
+          return res.status(200).json({ success: true, data: users });
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+    
+    
+
+
+
+
+           
+             
+         
+
 
 
 

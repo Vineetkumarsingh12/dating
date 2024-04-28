@@ -8,19 +8,21 @@ const LoveCalculator = () => {
   const calculateLove = () => {
     if (!yourName || !crushName) {
       setResult(0);
-      message.error("Enter the Names Properly")
+      message.error("Enter the Names Properly");
     } else {
       const lovePercentage = Math.floor(Math.random() * (100 - 60 + 1) + 60);
-      if(!result)
       setResult(lovePercentage);
     }
   };
 
   return (
     <div className="  p-[2rem] bg-white  flex flex-col   rounded items-center transition-transform duration-300 ease-in-out shadow-lg  max-w-[600px] relative top-[-1rem]">
-      <h1 className="text-[2rem] text-red-400 font-bold">
-        Calculate Love <br /> Between You and Your Crush
-      </h1>
+      <p className="text-[2rem] text-red-400 font-bold">
+        Calculate Love 
+      </p>
+      <p className="text-[2rem] text-red-400 font-bold">
+      Between You and Your Crush
+      </p>
       <div className="calc-wrap flex">
         <div className="fields text-[1.3rem] mt-[1rem]">
           <div className="field1">
@@ -30,6 +32,7 @@ const LoveCalculator = () => {
             <input
               type="text"
               className="outline-none p-1 border-b-2 border-red-500 border-solid w-[200px]"
+              value={yourName}
               onChange={(e) => setYourName(e.target.value)}
             />
           </div>
@@ -40,6 +43,7 @@ const LoveCalculator = () => {
             <input
               type="text"
               className="outline-none p-1 border-b-2 border-red-500 border-solid w-[200px]"
+              value={crushName}
               onChange={(e) => setCrushName(e.target.value)}
             />
           </div>

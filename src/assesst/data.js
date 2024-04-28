@@ -9,16 +9,11 @@ export const navData=[
   title:'My Profile',
     icon:<FaUser />,
     path:'/dashboard'
-}
-,{
-  title:'Find People',
-    icon:<FaSearch />,
-    path:'/dashboard/search'
-}
+},
 ,{
   title:"Confess Anonymously",
   icon:<FaHeartbeat />,
-    path:'/dashboard/confess'
+    path:'/dashboard/confess-anonymously'
 }
 ,{
     title:"My Friends",
@@ -29,12 +24,6 @@ export const navData=[
    title:'All Users',
     icon:<ImUsers />,
     path:'/dashboard/allusers'
-},
-,{
-    title:'Match',
-    icon:<GiHeartInside />,
-    path:'/dashboard/match'
-
 },
 
 ];

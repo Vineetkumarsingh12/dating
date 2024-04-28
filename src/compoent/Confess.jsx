@@ -32,12 +32,12 @@ const Confess = () => {
         </Link>
       </div>
       <div className="ladki mt-[6.5rem]">
-        <img src={Ladki} alt="" srcset=""  className="hidden md:block"/>
+        <img src={Ladki} alt=""  className="hidden md:block"/>
       </div>
       <div className="section1-props ">
-        <img src={privacy} alt="" srcset="" />
-        <img src={verified} alt="" srcset="" />
-        <img src={bestmatches} alt="" srcset="" />
+        <img src={privacy} alt=""  />
+        <img src={verified} alt=""  />
+        <img src={bestmatches} alt=""  />
       </div>
     </div>
   )
