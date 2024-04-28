@@ -1,22 +1,28 @@
 import { compare } from "bcrypt";
-import { User } from "../models/user.js";
+import { User } from "../model/user.js";
 import jwt from "jsonwebtoken";
+import {personality as Question} from "../model/personality.js"
 import {
   cookieOptions,
   uploadFilesToCloudinary,
 } from "../utils/features.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { get } from "mongoose";
 dotenv.config();
 
 
 
 // Create a new user and save it to the database and save token in cookie
 const newUser =async(req,res) => {
+  console.log(req.body);
     try{
-  const { name, username,email, password, bio } = req.body;
+  const { name, username,email, password, bio ,
+    gender,educationQualification} = req.body;
+    console.log(req.body);
 
   const file = req.file;
+  console.log(file);
 
   if (!file) {
     return res.status(400).json({
@@ -28,8 +34,9 @@ const newUser =async(req,res) => {
 
   const userExists= await User.findOne({email:email});
     if(userExists) return res.status(400).json({success:false,message:"User already exists"});
+    console.log(userExists);
   
-if(userExists.username===username) return res.status(400).json({success:false,message:"username already exists"});
+if(userExists?.username==username) return res.status(400).json({success:false,message:"username already exists"});
 
 
   const result = await uploadFilesToCloudinary([file]);
@@ -45,16 +52,23 @@ if(userExists.username===username) return res.status(400).json({success:false,me
   // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
+  console.log("pass1");
+  const temp = await Question.create({});
+  console.log(temp);
 
   const user = await User.create({
     name,
     bio,
     email,
     username,
+    gender:gender,
+    educationQualification,
     password: hashedPassword,
     avatar,
+    personality:temp._id
   });
+
+  console.log("pass2");
 
   
 
@@ -66,6 +80,7 @@ if(userExists.username===username) return res.status(400).json({success:false,me
   
    
   }catch(err){
+    console.log(err);
     return res.status(500).json({success:false,message:"Something went wrong"});
   }
 }
@@ -77,7 +92,7 @@ const login = async(req,res) => {
 
 
 
-        const user = await User.findOne({ email }).select("+password");
+        const user = await User.findOne({ email }).select("+password").populate("personality");
         if (!user) return res.status(400).json({success:false,message:"Invalid Username or Password"});
 
         const isMatch = await compare(password, user.password);
@@ -89,6 +104,7 @@ const login = async(req,res) => {
     success: false,
     message: "Invalid email or Password",
   });
+    user.password = undefined;
 
 
 
@@ -99,6 +115,7 @@ const login = async(req,res) => {
 
 
      return  res.cookie("rocket-token", token, cookieOptions).status(200).json({
+        data:user,
         success: true,
         message: "Logged in successfully",
       });

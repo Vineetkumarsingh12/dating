@@ -3,11 +3,12 @@ import { CiMenuBurger } from 'react-icons/ci';
 import Drawer from '@mui/material/Drawer';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:640px)');
-    const [isUser, setIsUser] = useState(false);
+    const isUser= useSelector(state => state.auth.user);
     console.log(isSmallScreen);
     return (
         <div className=' p-1 fixed w-full'>
@@ -29,15 +30,11 @@ const Navbar = () => {
                     }
                  
                     {
-                        isUser && <div className=''>Name</div>
+                        isUser && <div className=''>{isUser.username} </div>
                     
                     }
-                    {
-                        isUser && <div className=''>Signout</div>
-                    }
-                    {
-
-                    }
+                    
+                
                 </div>
           </div>
         </div>

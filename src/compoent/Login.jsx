@@ -10,6 +10,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { NativeSelect } from "@mui/material";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -19,17 +21,23 @@ import { bgGradient } from "../constrants/color";
 import { server } from "../constrants/config";
 import { userExists } from "../reduxslice/auth";
 import { usernameValidator } from "../utils/validators";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  console.log(server);
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const naviagte = useNavigate();
 
   const toggleLogin = () => setIsLogin((prev) => !prev);
 
   const name = useInputValidation("");
   const bio = useInputValidation("");
   const username = useInputValidation("", usernameValidator);
+  const [email, setEmail] = useState("");
   const password = useInputValidation("");
+  const [gender, setGender] = useState("Male");
+  const [educationQualification, setEducationQualification] = useState("");
 
   const avatar = useFileHandler("single");
 
@@ -52,15 +60,20 @@ const Login = () => {
       const { data } = await axios.post(
         `${server}/api/v1/user/login`,
         {
-          username: username.value,
+          email:email,
           password: password.value,
+
         },
         config
       );
-      dispatch(userExists(data.user));
+      console.log(data);
+      console.log(data.data);
+      dispatch(userExists(data.data));
       toast.success(data.message, {
         id: toastId,
       });
+   localStorage.setItem("rocket-data", JSON.stringify(data.data));
+      naviagte("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something Went Wrong", {
         id: toastId,
@@ -69,7 +82,7 @@ const Login = () => {
       setIsLoading(false);
     }
   };
-
+  console.log(gender);
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -80,8 +93,12 @@ const Login = () => {
     formData.append("avatar", avatar.file);
     formData.append("name", name.value);
     formData.append("bio", bio.value);
+    formData.append("email", email);
     formData.append("username", username.value);
     formData.append("password", password.value);
+    formData.append("gender",gender);
+    formData.append("educationQualification",educationQualification);
+    
 
     const config = {
       withCredentials: true,
@@ -101,6 +118,7 @@ const Login = () => {
       toast.success(data.message, {
         id: toastId,
       });
+   
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something Went Wrong", {
         id: toastId,
@@ -148,12 +166,15 @@ const Login = () => {
                 <TextField
                   required
                   fullWidth
-                  label="Username"
+                  label="Email"
+                  type="email"
                   margin="normal"
                   variant="outlined"
-                  value={username.value}
-                  onChange={username.changeHandler}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
+
+
 
                 <TextField
                   required
@@ -257,7 +278,42 @@ const Login = () => {
                   value={name.value}
                   onChange={name.changeHandler}
                 />
+                   <TextField
+                  required
+                  fullWidth
+                  label="Email"
+                  type="email"
+                  margin="normal"
+                  variant="outlined"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
+<InputLabel variant="standard" htmlFor="Gender">
+     Gender
+  </InputLabel>
+  <NativeSelect
+    defaultValue={gender}
+  
+    onChange={(e) => setGender(e.target .value)}
+  >
+    <option value={"Male"}>Male</option>
+    <option value={"Female"}>Female</option>
+  
+  </NativeSelect>
+
+<TextField
+                  required
+                  fullWidth
+                  label="Education Qualification"
+                  margin="normal"
+                  variant="outlined"
+                  value={educationQualification}
+                  onChange={(e) => setEducationQualification(e.target.value)}
+                />
+
+
+       
                 <TextField
                   required
                   fullWidth

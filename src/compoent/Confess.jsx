@@ -22,7 +22,7 @@ const Confess = () => {
         <p className="text-[2rem] text-red-500 font-thin">
           Confess your Crush Anonomously...
         </p>
-        <Link to='/own-dashboard/confess-anonymously'>
+        <Link to='/dashboard'>
         <button className="text-[2rem] bg-red-400 text-white rounded p-2">
             <div className='flex items-baseline'>
          <p>Confess Anonymously</p>

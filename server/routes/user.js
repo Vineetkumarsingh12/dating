@@ -1,0 +1,27 @@
+
+import express from "express";
+import {updatePersonality} from "../controller/user.js";
+import { isAuthenticated } from "../middleware/auth.js";
+import {personality} from "../controller/user.js";
+import {allConfession} from "../controller/user.js";
+import {ownConfession} from "../controller/user.js";
+import { confessTo } from "../controller/user.js";
+
+
+
+const router = express.Router();
+
+// Routes accessible without authentication
+
+
+// Routes that require authentication
+router.use(isAuthenticated);
+router.post("/updatePersonality",updatePersonality);
+router.get("/personality/:id",personality);
+router.get("/allConfession",allConfession);
+router.get("ownConfession",ownConfession);
+router.post("/confess",confessTo);
+
+
+
+export default router;

@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { hash } from "bcrypt";
+
 
 const schema = new Schema(
   {
@@ -36,6 +36,21 @@ const schema = new Schema(
         required: true,
       },
     },
+    
+      gender: {
+        type: String,
+        required: true,
+      },
+      educationQualification: {
+        type: String,
+        required: true,
+      },
+      personality:{
+        type: Schema.Types.ObjectId,
+        ref:'personality',
+        required:true
+      },
+    
   },
   {
     timestamps: true,

@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-import { ROCKET_TOKEN } from "../constants/config.js";
-import { User } from "../models/user.js";
+
+import { User } from "../model/user.js";
 
 const isAuthenticated = async(req, res, next) => {
     try{
-
     
-  const token = req.cookies[ROCKET_TOKEN];
+    console.log(req.cookies["rocket-token"]);
+  const token = req.cookies["rocket-token"];
   if (!token)
     return res.status(401).json({ success: false, message: "Unauthorized" });
 

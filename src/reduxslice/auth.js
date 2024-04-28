@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  user: null,
-  isAdmin: false,
+  user: null || JSON.parse(localStorage.getItem("rocket-data")) ,
   loader: true,
 };
 
