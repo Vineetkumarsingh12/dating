@@ -9,6 +9,7 @@ import MyProfile from "./compoent/Pofile";
 import ConfessAnonymously from "./compoent/ConfessAnonymously";
 import AllUsers from "./compoent/AllUser";
 import ConfessWrite from "./compoent/ConfessWrite";
+import SingleUser from "./compoent/SingleUser";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='allusers' element={<Protected Component={AllUsers}/>}/>
           <Route path='confess-anonymously' element={<Protected  Component={ConfessAnonymously}/>}/>
           <Route path='confess/:id' element={<Protected  Component={ConfessWrite}/>}/>
+          <Route path='details/:id' element={<Protected  Component={SingleUser}/>}/>
           </Route>
       
 </Routes>

@@ -18,7 +18,7 @@ export const navData=[
 ,{
     title:"My Friends",
     icon:<PiUsersThreeFill />,
-    path:'/dashboard/friends'
+    path:'http://localhost:5173/'
 },
 {
    title:'All Users',

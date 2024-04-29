@@ -151,6 +151,22 @@ console.log("pass1");
             res.status(500).json({ message: 'Internal server error' });
         }
     };
+
+    // get single user
+     
+    export const singleUser = async (req, res) => {
+        try {
+         // find all user not equal to current user
+           const {id}=req.params;
+            const user = await User.findById(id).select('-password').populate('personality');
+            if(!user) return res.status(400).json({success:false,message:"User not found"});
+            return res.status(200).json({ success: true, data: user });
+        }
+        catch (error) {
+            console.error('Error:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
     
     
 

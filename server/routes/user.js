@@ -7,6 +7,7 @@ import {allConfession} from "../controller/user.js";
 import {ownConfession} from "../controller/user.js";
 import { confessTo } from "../controller/user.js";
 import { similarPersonality} from "../controller/user.js";
+import {singleUser}  from "../controller/user.js";
 
 
 
@@ -23,7 +24,9 @@ router.get("/allConfession",allConfession);
 router.get("/ownConfession",ownConfession);
 router.post("/confess",confessTo);
 router.get("/similarPersonality",similarPersonality);
-router.get("/allUser",allUser);
+router.get("/allUser",allUser)
+router.get("/singleUser/:id",singleUser);
+
 
 
 

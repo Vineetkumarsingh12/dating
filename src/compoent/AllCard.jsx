@@ -18,7 +18,7 @@ const AllCard = ({ user }) => {
         <Link to={`/dashboard/confess/${user._id}`} className="text-blue-500 hover:text-blue-700">
           Confess
         </Link>
-        <Link to="/details" className="text-blue-500 hover:text-blue-700">
+        <Link to={`/dashboard/details/${user._id}`} className="text-blue-500 hover:text-blue-700">
           Details
         </Link>
       </div>

@@ -6,11 +6,10 @@ const ProtectedRoute = ({ Component }) => {
   const navigate = useNavigate();
   const user =  useSelector(state => state.auth.user);
 
-
+  console.log("protedd",user);
   
   if (!user) {
-    navigate("/login");
-    return null;
+    return navigate("/login");
   }
 
 
