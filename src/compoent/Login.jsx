@@ -1,5 +1,6 @@
 import { useFileHandler, useInputValidation } from "6pp";
 import { CameraAlt as CameraAltIcon } from "@mui/icons-material";
+import { sendOtp } from "../constrants/sendOtp";
 import {
   Avatar,
   Button,
@@ -22,6 +23,7 @@ import { server } from "../constrants/config";
 import { userExists } from "../reduxslice/auth";
 import { usernameValidator } from "../utils/validators";
 import { useNavigate } from "react-router-dom";
+import {setSignupData} from "../reduxslice/auth";
 
 const Login = () => {
   console.log(server);
@@ -49,6 +51,7 @@ const Login = () => {
     const toastId = toast.loading("Logging In...");
 
     setIsLoading(true);
+ 
     const config = {
       withCredentials: true,
       headers: {
@@ -85,9 +88,7 @@ const Login = () => {
   console.log(gender);
   const handleSignUp = async (e) => {
     e.preventDefault();
-
-    const toastId = toast.loading("Signing Up...");
-    setIsLoading(true);
+   
 
     const formData = new FormData();
     formData.append("avatar", avatar.file);
@@ -98,34 +99,12 @@ const Login = () => {
     formData.append("password", password.value);
     formData.append("gender",gender);
     formData.append("educationQualification",educationQualification);
+    console.log(formData);
+    
+    dispatch(setSignupData(formData));
+    dispatch(sendOtp(email,naviagte));
     
 
-    const config = {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-
-    try {
-      const { data } = await axios.post(
-        `${server}/api/v1/user/new`,
-        formData,
-        config
-      );
-
-      dispatch(userExists(data.user));
-      toast.success(data.message, {
-        id: toastId,
-      });
-   
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Something Went Wrong", {
-        id: toastId,
-      });
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -360,7 +339,7 @@ const Login = () => {
                   fullWidth
                   disabled={isLoading}
                 >
-                  Sign Up
+                  Send OTP
                 </Button>
 
                 <Typography textAlign={"center"} m={"1rem"}>

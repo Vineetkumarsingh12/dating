@@ -11,11 +11,30 @@ const Navbar = () => {
     const isUser= useSelector(state => state.auth.user);
     console.log(isSmallScreen);
     return (
-        <div className=' p-1 fixed w-full'>
+        <div className='  fixed   w-full bg-transparent bg-gray-400  z-40  backdrop-blur-lg'>
             <CiMenuBurger className={isSmallScreen? "":'sm:hidden'} onClick={() => setIsOpen(true)} />
             <Drawer open={isOpen && isSmallScreen} onClose={() => setIsOpen(false)}>
                 {/* Content inside the Drawer */}
-                <div style={{ width: '250px' }}>vineet</div>
+                <div style={{ width: '250px' }}  className=' flex flex-col gap-3'>
+            
+              
+                <div className='text-2xl font-bold'>Logo</div>
+                    <div className=''>Home</div>
+                    <div className=''>About</div>
+                    <div className=''>Contact</div>
+                  {/* login ,signup, signout */}
+                    {
+                        !isUser && <Link to="/login" className=''>Login</Link>
+                    }
+                 
+                    {
+                        isUser && <div className=''>{isUser.username} </div>
+                    
+                    }
+                    
+                
+                </div>
+               
             </Drawer>
 
             <div className='sm:flex hidden justify-between p-2 items-center'>

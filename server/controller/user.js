@@ -1,6 +1,8 @@
 import { User } from "../model/user.js";
 import {personality as Question} from "../model/personality.js"
 import {confession} from "../model/confess.js";
+import { mailSender } from "../mail/mailSender.js";
+
 
 
 
@@ -111,7 +113,17 @@ console.log("pass1");
             const confess2=await confession.findOne({confessTo:req._id,confessBy:confessTo});
             console.log("pass6");
             if(confess2){
-                //send mail to all  user.
+                //send mail to all user 
+
+                // select only email from all user 
+                // const users=await User.find().select('email');
+                // //iterate over all user and send mail
+                // users.forEach(async(user)=>{
+                //     await mailSender(user.email,"New Confession match",);
+                // })
+
+            }else{
+                    //   await mailSender(user.email,"New Confession",);
             }
   console.log("confession",confessData);
             return res.status(200).json({success:true,data:confessData});
@@ -167,19 +179,3 @@ console.log("pass1");
             res.status(500).json({ message: 'Internal server error' });
         }
     }
-    
-    
-
-
-
-
-           
-             
-         
-
-
-
-
-
-
-

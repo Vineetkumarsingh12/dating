@@ -10,10 +10,11 @@ import ConfessAnonymously from "./compoent/ConfessAnonymously";
 import AllUsers from "./compoent/AllUser";
 import ConfessWrite from "./compoent/ConfessWrite";
 import SingleUser from "./compoent/SingleUser";
+import VerifyOtp from "./compoent/VerifyOtp";
 
 function App() {
   return (
- <div className="h-full ">
+ <div className="h-full w-full ">
   {/* navbar */}
   <Navbar/>
 
@@ -22,6 +23,7 @@ function App() {
 <Routes>
   <Route path="/" element={<Home/>}/>
   <Route path="/login" element={<Login/>}/>
+  <Route path="/verify-otp" element={<VerifyOtp/>}/>
 
   <Route path='/dashboard' element={<Protected Component={DashBoard}/>}>
           <Route path='' element={<Protected Component={MyProfile}/>}/>

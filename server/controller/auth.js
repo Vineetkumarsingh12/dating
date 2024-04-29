@@ -8,7 +8,8 @@ import {
 } from "../utils/features.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import { get } from "mongoose";
+import optGenerator from "otp-generator";
+import { otp } from "../model/otp.js";
 dotenv.config();
 
 
@@ -19,8 +20,9 @@ const newUser =async(req,res) => {
     try{
   const { name, username,email, password, bio ,
     gender,educationQualification} = req.body;
+  
     console.log(req.body);
-
+   
   const file = req.file;
   console.log(file);
 
@@ -38,6 +40,16 @@ const newUser =async(req,res) => {
   
 if(userExists?.username==username) return res.status(400).json({success:false,message:"username already exists"});
 
+const otpData = await otp.findOne({ email }).sort({ createdAt: -1 }).limit(1);
+if (!otpData) {
+
+  return res.status(400).json({ error: "OTP not found" });
+}
+
+else if(otpData.otp!==req.body.otp){
+  return res.status(400).json({ error: "OTP not matched" });
+
+}
 
   const result = await uploadFilesToCloudinary([file]);
 
@@ -93,7 +105,7 @@ const login = async(req,res) => {
 
 
         const user = await User.findOne({ email }).select("+password").populate("personality");
-        if (!user) return res.status(400).json({success:false,message:"Invalid Username or Password"});
+        if (!user) return res.status(400).json({success:false,message:"Invalid email or Password"});
 
         const isMatch = await compare(password, user.password);
 
@@ -165,34 +177,38 @@ const logout = async (req, res) => {
 };
 
 
-
-
-
+    // send otp
+  const sendOtp=async(req,res)=>{
+      try{
+//check if user already exists
+      const { email } = req.body;
+      const user = await User.findOne({ email });
+      if (user) {
+        return res.status(400).json({ error: "user already exists" });
+      }
+      //generate otp
+      let gotp=optGenerator.generate(6,{upperCase:false,specialChars:false});
+      //check if otp already exists
+      let otpData = await otp.findOne({ otp:gotp });
   
+      while(otpData){
+        gotp=optGenerator.generate(6,{upperCase:false,specialChars:false});
+        otpData = await otp.findOne({ otp:gotp });
+        console.log("infitie otp loop");
+      }
+      //create otp
+     const response= await otp.create({
+        email,
+        otp:gotp,
+      });
 
+      console.log(response+" *** "+gotp);
+      res.status(200).json({message:"otp sent successfully"});
 
-
-
-
-
-
-
-
-
-  
-   
-
-
-
-
-
-
-
-
-  
-
-
-
+      }catch(err){
+          return res.status(500).json({ error: err.message,message:"error in send otp" });
+      }
+  }
 
 
 export {
@@ -201,5 +217,6 @@ export {
   login,
   logout,
   newUser,
+  sendOtp,
 
 };

@@ -3,7 +3,7 @@ import Card from "./Card";
 import MiniCard from "./MiniCard";
 const Section1 = () => {
   return (
-    <div className="   max-h-fit w-full pb-20 bg-gradient-to-r from-blue-400 to-white flex  flex-col items-center  ">
+    <div className="   max-h-fit  pb-20 bg-gradient-to-r from-blue-400 to-white flex  flex-col items-center  ">
       <Card />
       <p className="quotation text-[5rem] font-bold text-cyan-800 text-center">
         It All Starts With A Date
