@@ -5,6 +5,11 @@ const store = configureStore({
     [authSlice.name]: authSlice.reducer,
  
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
  
 });
 
