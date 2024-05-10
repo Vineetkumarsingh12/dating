@@ -16,7 +16,7 @@ dotenv.config();
 
 // Create a new user and save it to the database and save token in cookie
 const newUser =async(req,res) => {
-  console.log(req.body);
+
     try{
   const { name, username,email, password, bio ,
     gender,educationQualification} = req.body;
@@ -27,7 +27,7 @@ const newUser =async(req,res) => {
   console.log(file);
 
   if (!file) {
-    return res.status(400).json({
+    return res.status(200).json({
       success: false,
       message: "Please upload an image",
     });
@@ -35,25 +35,26 @@ const newUser =async(req,res) => {
 
 
   const userExists= await User.findOne({email:email});
-    if(userExists) return res.status(400).json({success:false,message:"User already exists"});
+    if(userExists) return res.status(200).json({success:false,message:"User already exists"});
     console.log(userExists);
   
-if(userExists?.username==username) return res.status(400).json({success:false,message:"username already exists"});
+if(userExists?.username==username) return res.status(200).json({success:false,message:"username already exists"});
 
 const otpData = await otp.findOne({ email }).sort({ createdAt: -1 }).limit(1);
 if (!otpData) {
 
-  return res.status(400).json({ error: "OTP not found" });
+  return res.status(200).json({ error: "OTP not found" });
 }
 
 else if(otpData.otp!==req.body.otp){
-  return res.status(400).json({ error: "OTP not matched" });
+  console.log("not equal")
+  return res.status(200).json({ error: "OTP not matched" });
 
 }
 
   const result = await uploadFilesToCloudinary([file]);
 
- if(!result) return res.status(400).json({success:false,message:"Image upload failed"});
+ if(!result) return res.status(200).json({success:false,message:"Image upload failed"});
 
   const avatar = {
     public_id: result[0].public_id,

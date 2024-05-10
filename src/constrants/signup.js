@@ -20,11 +20,13 @@ try {
             "Content-Type": "multipart/form-data",
           },
         });
-
+         
+        console.log(data.message);
+        if(data.success==false){
+          return toast.error(data.message);
+        }
       dispatch(userExists(data.user));
-      toast.success(data.message, {
-        id: toastId,
-      });
+      toast.success(data.message);
         navigate("/login");
    
     } catch (error) {
