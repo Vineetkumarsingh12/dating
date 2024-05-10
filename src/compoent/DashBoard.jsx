@@ -87,7 +87,7 @@ const DashBoard = () => {
                             </button>  
                         }
     </div>
-    <div className='w-[70%]  '>
+    <div className='  '>
         <Outlet />
     </div>
     </div>

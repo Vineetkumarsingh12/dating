@@ -10,7 +10,7 @@ import other from './routes/user.js';
 const app = express();
 app.use(cors({ 
   //add multiple domains in the array
-  origion: ['http://localhost:3000','https://dating-nine-rose.vercel.app/'],
+  origin: ['http://localhost:3000','https://dating-nine-rose.vercel.app/'],
   credentials: true // Allow sending cookies with the request
 }));
 app.use(express.json());
