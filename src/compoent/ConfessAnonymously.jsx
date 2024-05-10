@@ -36,7 +36,7 @@ const ConfessAnonymously = () => {
   }, []);
 
   return (
-    <div className='flex flex-col gap-6 min-h-screen p-4 bg-green-300 rounded'>
+    <div className='flex flex-col gap-6 min-h-screen p-4 bg-green-300 rounded  '>
       {/* All confessions */}
       <div>
         <h2 className='text-2xl font-bold text-center'>All Confessions</h2>
