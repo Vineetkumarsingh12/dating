@@ -9,7 +9,7 @@ import other from './routes/user.js';
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: ['http://localhost:3000','https://dating-nine-rose.vercel.app'], 
   credentials: true // Allow sending cookies with the request
 }));
 app.use(express.json());
@@ -29,6 +29,9 @@ cloudinary.config({
 
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/other',other)
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
 
 app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
