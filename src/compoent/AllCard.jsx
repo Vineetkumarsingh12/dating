@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const AllCard = ({ user }) => {
   return (
-    <div className="flex-col w-72  border border-gray-300 rounded overflow-hidden">
+    <div className="flex-col w-72  border border-gray-300 rounded overflow-hidden bg-blue-200">
       <div className="flex flex-col justify-between flex-1 p-4">
-        <img src={user.avatar.url} alt="profile" className="w-full h-24 object-cover mb-4" />
+        <img src={user.avatar.url} alt="profile" className="w-full h-40 object-cover mb-4" />
         <div>
           <p className="text-sm font-semibold">Name: {user.name}</p>
           <p className="text-sm">Username: {user.username}</p>
@@ -15,10 +15,10 @@ const AllCard = ({ user }) => {
         </div>
       </div>
       <div className="flex items-end justify-between p-4">
-        <Link to={`/dashboard/confess/${user._id}`} className="text-blue-500 hover:text-blue-700">
+        <Link to={`/dashboard/confess/${user._id}`} className="text-blue-500 hover:text-blue-700 bg-white p-1 rounded hover:bg-green-200">
           Confess
         </Link>
-        <Link to={`/dashboard/details/${user._id}`} className="text-blue-500 hover:text-blue-700">
+        <Link to={`/dashboard/details/${user._id}`} className="text-blue-500 hover:text-blue-700 bg-white p-1 rounded hover:bg-green-200">
           Details
         </Link>
       </div>

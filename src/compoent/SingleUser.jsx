@@ -24,22 +24,23 @@ const SingleUser = () => {
 
    
   return (
-    <div  className=' '>
-        <div className=' flex'>
-        <img src={user?.avatar?.url} alt="profile" className="w-full h-24 object-cover mb-4" />
-        <div>
-          <p className="text-sm font-semibold">Name: {user?.name}</p>
-          <p className="text-sm">Username: {user?.username}</p>
-          <p className="text-sm">Email: {user?.email}</p>
-          <p className="text-sm">Bio: {user?.bio}</p>
-          <p className="text-sm">Gender: {user?.gender}</p>
-          <p className="text-sm">Education Qualification: {user?.educationQualification}</p>
+    <div  className=' min-h-screen bg-blue-200 p-3 h-fit flex flex-col gap-5 rounded'>
+        <div className=' bg-sky-900  flex flex-wrap justify-center items-center gap-5 p-3 rounded '>
+        <img src={user?.avatar?.url} alt="profile" className=" rounded-full    h-96" />
+        <div className="bg-white shadow-md rounded-md p-4">
+  <p className="text-sm font-semibold">Name: {user?.name}</p>
+  <p className="text-sm">Username: {user?.username}</p>
+  <p className="text-sm">Email: {user?.email}</p>
+  <p className="text-sm">Bio: {user?.bio}</p>
+  <p className="text-sm">Gender: {user?.gender}</p>
+  <p className="text-sm">Education Qualification: {user?.educationQualification}</p>
+</div>
+
         </div>
-        </div>
-        <div>
+        <div className='bg-sky-900 rounded-md text-white p-[2rem] font-thin text-[1.3rem]'>
           {
            user?.personality && personalityQuestions.map((question, index) => (
-              <div key={index}>
+              <div key={index} className='flex  gap-2'>
                 <label htmlFor={question.id}>{question.question}</label>
                 <input
                   type="range"
@@ -47,6 +48,7 @@ const SingleUser = () => {
                   min="1"
                   max="10"
                   value={user.personality[question.id]}
+                  className='ml-[2rem] text-white  outline-transparent'
                 />
               </div>
             ))

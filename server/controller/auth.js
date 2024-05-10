@@ -181,10 +181,16 @@ const logout = async (req, res) => {
   const sendOtp=async(req,res)=>{
       try{
 //check if user already exists
-      const { email } = req.body;
+  console.log(req.body);
+      const { email ,username} = req.body;
       const user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ error: "user already exists" });
+        return res.status(400).json({ error: "email already exists" });
+      }
+      const uname=await User.findOne({username});
+      console.log(uname);
+      if(uname){
+        return res.status(400).json({ error: "username already exists" });
       }
       //generate otp
       let gotp=optGenerator.generate(6,{upperCase:false,specialChars:false});

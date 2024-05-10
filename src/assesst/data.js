@@ -31,7 +31,7 @@ export const navData=[
 export const personalityQuestions = [
     {
       id: 'adventurous',
-      question: 'how adventurous are you?'
+      question: 'How adventurous are you?'
     },
     {
       id: 'senseOfHumor',

@@ -1,4 +1,4 @@
-const confessMailMulti = (data1,data2) => {  
+const confessMailMulti = (name1,desc,name2,des2) => {  
     return `
     <!DOCTYPE html>
     <html>
@@ -21,9 +21,11 @@ const confessMailMulti = (data1,data2) => {
     </head>
     <body>  
         <div class="container">
-            <h1>OTP for Verification</h1>
-            <p>Use this OTP to verify your email address</p>
-            <h2>${otp}</h2>
+            <h1>New Confession Match</h1>
+            <p><strong>${name1}</strong> confessed:</p>
+            <p>${desc}</p>
+            <p><strong>${name2}</strong> confessed:</p>
+            <p>${des2}</p>
         </div>
     </body>
     </html>

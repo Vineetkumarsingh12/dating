@@ -2,6 +2,8 @@ import { User } from "../model/user.js";
 import {personality as Question} from "../model/personality.js"
 import {confession} from "../model/confess.js";
 import { mailSender } from "../mail/mailSender.js";
+import confessMail from "../mail/confessMail.js";
+import confessMailMulti from "../mail/confessMailMulti.js"
 
 
 
@@ -86,6 +88,7 @@ export const allConfession=async(req,res)=>{
     export const confessTo=async(req,res)=>{
         try{
             const {description,confessTo}=req.body;
+            console.log("inside confessTo backend");
             console.log(req.body);
 
            
@@ -111,21 +114,32 @@ console.log("pass1");
             console.log("pass5");
             //   check if confessTo is already confessed
             const confess2=await confession.findOne({confessTo:req._id,confessBy:confessTo});
-            console.log("pass6");
+            console.log("pass6",confess2);
+
+            const confessed=await User.findById(req._id);
             if(confess2){
                 //send mail to all user 
 
                 // select only email from all user 
-                // const users=await User.find().select('email');
+                const users=await User.find().select('email');
                 // //iterate over all user and send mail
-                // users.forEach(async(user)=>{
-                //     await mailSender(user.email,"New Confession match",);
+                   
+                 console.log("mail Send krwo sbko",user,users,confessed);
+                // users.forEach(async(u)=>{
+                //    await mailSender(u.email,"New Confession Match", confessMailMulti(confessed.name,description,user.name,user.description));
                 // })
+                console.log(confessed.name,description,user.name,confess2.description);
+
 
             }else{
-                    //   await mailSender(user.email,"New Confession",);
+                   
+                    console.log("mail Send krwo",user);
+                //   await mailSender(user.email,"New Confession", confessMail(confessed.name,description));
+                console.log("confessed",confessed);
+                console.log("description",description);
+                 
             }
-  console.log("confession",confessData);
+  console.log("confessionDATA",confessData);
             return res.status(200).json({success:true,data:confessData});
         }catch(err){
             return res.status(500).json({success:false,message:"Something went wrong"});
@@ -139,16 +153,60 @@ console.log("pass1");
     
     export const similarPersonality = async (req, res) => {
         try {
-         // find all user not equal to current user
-         console.log("current user",req._id);
-         const users = await User.find({ _id: { $ne: req._id },gender:{$ne:req.gender}}).select('-password');
+             
+      
+          // Retrieve personality traits of the specified user
+          const user = await User.findById(req._id).select("-password").populate("personality");
+      
+       
+      
+           // find other user and oppsite gender
+           const users=await User.find({
+            _id: { $ne: req._id }, 
+            gender: { $ne: req.gender} 
+           }).populate("personality").select("-password");
 
-          return res.status(200).json({ success: true, data: users });
+      
+          // Calculate cosine similarity for each user
+          const similarUsers = users.map((otherUser) => {
+            const similarityScore = computeCosineSimilarity(user.personality, otherUser.personality);
+            return { user:otherUser ,similarityScore:similarityScore };
+          });
+      
+          // Sort users by similarity score in descending order
+          similarUsers.sort((a, b) => b.similarityScore - a.similarityScore);
+      
+    
+      
+          return res.status(200).json({ success: true, data: similarUsers});
         } catch (error) {
-            console.error('Error:', error);
-            res.status(500).json({ message: 'Internal server error' });
+          console.error("Error:", error);
+          res.status(500).json({ message: "Internal server error" });
         }
-    };
+      };
+      
+      
+      function computeCosineSimilarity(userA, userB) {
+        const {_id:id1,mark:mark1,...vectorA} = Object.values(userA).slice(2)[0]; 
+        const {_id:id2,mark:mark2,...vectorB}= Object.values(userB).slice(2)[0]; 
+        console.log("vectorA",vectorA);
+        console.log("vectorB",vectorB);
+      
+   
+
+        const keys = Object.keys(vectorA); // Assuming both vectors have the same keys
+
+        // Calculate dot product
+        const dotProduct = keys.reduce((acc, key) => acc + (vectorA[key] * vectorB[key]), 0);
+    
+        // Calculate magnitudes
+        const magnitudeA = Math.sqrt(keys.reduce((acc, key) => acc + Math.pow(vectorA[key], 2), 0));
+        const magnitudeB = Math.sqrt(keys.reduce((acc, key) => acc + Math.pow(vectorB[key], 2), 0));
+    
+        // Calculate cosine similarity
+        return dotProduct / (magnitudeA * magnitudeB);
+      }
+      
 
 
     export const allUser = async (req, res) => {

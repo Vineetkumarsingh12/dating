@@ -9,6 +9,7 @@ import Sidebar from './Sidebar';
 import { server } from '../constrants/config';
 import {userNotExists} from '../reduxslice/auth';
 import { useDispatch } from 'react-redux';
+import { ImProfile } from "react-icons/im";
 
 
 
@@ -23,7 +24,8 @@ const DashBoard = () => {
     const path = location.pathname;
     const [isOpen, setIsOpen] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:640px)');
-   
+
+   console.log(isSmallScreen);
 
    
        
@@ -48,9 +50,9 @@ const DashBoard = () => {
     };
 
     return (
-        <div className='h-full '>
+        <div className='pt-14 flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 '>
             <div>
-                <FaArrowCircleLeft className={`absolute top-1/2 transform -translate-y-1/2 right-0 animate-pulse text-[2rem] ${isSmallScreen ? ' md:block':"hidden"} cursor-pointer`} onClick={() => setIsOpen(true)} />
+                <ImProfile className={`absolute top-10 right-3 bg-white p-1  animate-pulse text-[2.5rem] ${isSmallScreen ? ' md:block':"hidden"} cursor-pointer`} onClick={() => setIsOpen(true)} />
                 <Drawer open={isOpen && isSmallScreen} anchor="right" onClose={() => setIsOpen(false)}>
                     <div style={{ width: '250px' }}>
                         {navData.map((item, index) => (
@@ -71,21 +73,21 @@ const DashBoard = () => {
             </div>
         
 
-  <div className='   h-screen flex  items-center '>
-    <div className=' max-w-[20%]'>
+  <div className='   flex    gap-4 w-full justify-center p-2 min-h-screen'>
+    <div className={` ${isSmallScreen ? "hidden":"md:block"} bg-sky-900  rounded `}>
     {navData.map((item, index) => (
-                           <Sidebar key={index} item={item} index={index} />
+                           <Sidebar key={index} item={item} index={index} path={path}/>
                         ))}
                          {
-                            <button className='p-3 hover:bg-gray-200' onClick={handleLogout}>
+                            <button className='p-3  hover:bg-gray-200 w-full ' onClick={handleLogout}>
                                 <div className=' flex items-center'>
                                     <GrLogout />
-                                    <p className="ml-2">Logout</p>
+                                    <p className="ml-2 ">Logout</p>
                                 </div>
                             </button>  
                         }
     </div>
-    <div className=' w-[70%]'>
+    <div className='w-[70%]  '>
         <Outlet />
     </div>
     </div>

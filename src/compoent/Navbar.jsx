@@ -4,6 +4,8 @@ import Drawer from '@mui/material/Drawer';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import logo from "../assesst/logo.png"
+import { MdMenuOpen } from "react-icons/md";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,15 +13,20 @@ const Navbar = () => {
     const isUser= useSelector(state => state.auth.user);
     console.log(isSmallScreen);
     return (
-        <div className='  fixed   w-full bg-transparent bg-gray-400  z-40  backdrop-blur-lg'>
-            <CiMenuBurger className={isSmallScreen? "":'sm:hidden'} onClick={() => setIsOpen(true)} />
+        <div className='  fixed   w-full bg-transparent bg-gray-400  z-40  backdrop-blur-lg '>
+            <MdMenuOpen   
+ className={`${isSmallScreen? "":'sm:hidden'}  bg-white m-1 text-[2rem]`} onClick={() => setIsOpen(true)} />
             <Drawer open={isOpen && isSmallScreen} onClose={() => setIsOpen(false)}>
                 {/* Content inside the Drawer */}
-                <div style={{ width: '250px' }}  className=' flex flex-col gap-3'>
+                <div style={{ width: '200px' }}  className=' flex flex-col gap-3  p-3'>
             
               
-                <div className='text-2xl font-bold'>Logo</div>
-                    <div className=''>Home</div>
+                {/* <div className='text-2xl font-bold'>Logo</div> */}
+                <Link to="/" className=''>
+  <img src={logo} alt="logo" className='w-28 pt-1' />
+</Link>
+
+                   
                     <div className=''>About</div>
                     <div className=''>Contact</div>
                   {/* login ,signup, signout */}
@@ -37,21 +44,28 @@ const Navbar = () => {
                
             </Drawer>
 
-            <div className='sm:flex hidden justify-between p-2 items-center'>
-                <div className='text-2xl font-bold'>Logo</div>
+            <div className='sm:flex hidden justify-between px-2 items-center  '>
+            <Link to="/" className=''>
+            <img src={logo} alt="logo" className=' w-28 bg-white mt-1' />
+            </Link>
                 <div className='flex gap-3'>
-                    <div className=''>Home</div>
+                    
                     <div className=''>About</div>
                     <div className=''>Contact</div>
+                    <div className=' bg-white rounded p-1'>
                   {/* login ,signup, signout */}
                     {
                         !isUser && <Link to="/login" className=''>Login</Link>
                     }
                  
                     {
-                        isUser && <div className=''>{isUser.username} </div>
+                        isUser && <div className=' flex items-center gap-1'>
+                            <img src={isUser.avatar.url} alt="profile" className='w-8 h-8 rounded-full object-cover border border-black' />
+                            <p>{isUser.username}</p> 
+                            </div>
                     
                     }
+                    </div>
                     
                 
                 </div>

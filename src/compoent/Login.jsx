@@ -102,7 +102,7 @@ const Login = () => {
     console.log(formData);
     
     dispatch(setSignupData(formData));
-    dispatch(sendOtp(email,naviagte));
+    dispatch(sendOtp(email,username.value,naviagte));
     
 
   };
@@ -111,7 +111,7 @@ const Login = () => {
     <div
       style={{
         backgroundImage: bgGradient,
-      }}
+      }}  className={` ${isLogin?"":"h-[1000px]"} flex items-center`}
     >
       <Container
         component={"main"}

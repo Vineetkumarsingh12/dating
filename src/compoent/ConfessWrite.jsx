@@ -26,8 +26,10 @@ const ConfessWrite = () => {
         }
     }
   return (
-    <div className=' flex flex-col gap-2 '>
-      < textarea className=' w-screen  max-w-[400px] h-40 border-2 border-gray-300 p-2' placeholder='Write your confession here...'  value={data} onChange={
+    <div className=' flex flex-col gap-2 min-h-screen'>
+
+  <p className='text-center p-3 font-bold text-cyan-300 text-2xl'> confess </p>      
+      < textarea className='    h-40 border-2 border-gray-300 p-2' placeholder='Write your confession here...'  value={data} onChange={
             (e)=>setData(e.target.value)
       }/>
 
