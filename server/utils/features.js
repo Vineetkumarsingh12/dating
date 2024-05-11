@@ -8,8 +8,8 @@ const cookieOptions = {
   sameSite: "none",
   httpOnly: true,
   secure: true,
-  path:"/"
- 
+  domain: ".onrender.com",
+  path: "/",
 };
 
 const connectDB = (uri) => {
