@@ -127,7 +127,7 @@ console.log("pass1");
                    
                  console.log("mail Send krwo sbko",user,users,confessed);
                 users.forEach(async(u)=>{
-                   await mailSender(u.email,"New Confession Match", confessMailMulti(confessed.name,description,user.name,user.description));
+                   await mailSender(u.email,"New Confession Match", confessMailMulti(confessed.name,description,user.name,confess2.description));
                 })
                 console.log(confessed.name,description,user.name,confess2.description);
 

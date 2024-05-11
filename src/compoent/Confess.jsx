@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Confess = () => {
   return (
-    <div className=' h-[40rem] flex justify-center items-center  sm:justify-between py-5 px-2' style={{backgroundImage:`url(${bgroundImage})`}}>
+    <div className=' h-[40rem] flex justify-center items-center  sm:justify-between py-5 px-[2rem]' style={{backgroundImage:`url(${bgroundImage})`}}>
       
       <div className=" bottom-1">
         <p className="text-[4rem] font-bold text-sky-700">

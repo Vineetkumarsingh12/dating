@@ -29,6 +29,10 @@ const Profile = () => {
             }
         }
         fetchPersonality();
+
+        return ()=>{
+          
+        }
     },[personalityId]);
    
 
