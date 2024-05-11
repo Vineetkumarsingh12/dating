@@ -96,6 +96,7 @@ export const allConfession=async(req,res)=>{
          const user=await User.findById(confessTo);
             if(!user) return res.status(400).json({success:false,message:"User not found"});
             const gender=user.gender;
+
             if(req.gender==gender) return res.status(400).json({success:false,message:"You can only confess to opposite gender "});
       
 console.log("pass1");
@@ -125,16 +126,16 @@ console.log("pass1");
                 // //iterate over all user and send mail
                    
                  console.log("mail Send krwo sbko",user,users,confessed);
-                // users.forEach(async(u)=>{
-                //    await mailSender(u.email,"New Confession Match", confessMailMulti(confessed.name,description,user.name,user.description));
-                // })
+                users.forEach(async(u)=>{
+                   await mailSender(u.email,"New Confession Match", confessMailMulti(confessed.name,description,user.name,user.description));
+                })
                 console.log(confessed.name,description,user.name,confess2.description);
 
 
             }else{
                    
                     console.log("mail Send krwo",user);
-                //   await mailSender(user.email,"New Confession", confessMail(confessed.name,description));
+                  await mailSender(user.email,"New Confession", confessMail(confessed.name,description));
                 console.log("confessed",confessed);
                 console.log("description",description);
                  
@@ -158,7 +159,7 @@ console.log("pass1");
           // Retrieve personality traits of the specified user
           const user = await User.findById(req._id).select("-password").populate("personality");
       
-       
+          console.log("genderrrrr",req.gender);
       
            // find other user and oppsite gender
            const users=await User.find({
@@ -166,7 +167,7 @@ console.log("pass1");
             gender: { $ne: req.gender} 
            }).populate("personality").select("-password");
 
-      
+           console.log(users);     
           // Calculate cosine similarity for each user
           const similarUsers = users.map((otherUser) => {
             const similarityScore = computeCosineSimilarity(user.personality, otherUser.personality);

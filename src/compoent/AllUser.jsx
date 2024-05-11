@@ -12,7 +12,7 @@ const AllUser = ({ path = "allUser" }) => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get(`${server}/api/v1/other/${path}`, { withCredentials: true });
-                console.log("178739",response);
+              
                
                 setAllUser(response.data.data);
             

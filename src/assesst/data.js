@@ -18,7 +18,8 @@ export const navData=[
 ,{
     title:"My Friends",
     icon:<PiUsersThreeFill />,
-    path:'http://localhost:5173/'
+    // path:'http://localhost:5173/'
+    path:"https://rocket-chi.vercel.app/"
 },
 {
    title:'All Users',

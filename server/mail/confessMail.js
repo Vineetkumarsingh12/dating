@@ -1,4 +1,4 @@
-const confessMailSingle = (name, description) => {  
+const confessMailSingle = (name, description) => {
     return `
     <!DOCTYPE html>
     <html>
@@ -9,23 +9,23 @@ const confessMailSingle = (name, description) => {
             body {
                 margin: 0;
                 padding: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f1f1f1;
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa; /* Light gray background */
             }
             .container {
                 width: 80%;
                 margin: 20px auto;
-                background-color: white;
+                background-color: #ffffff; /* White container background */
                 padding: 20px;
                 border-radius: 10px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
             h1 {
                 text-align: center;
-                color: #333;
+                color: #343a40; /* Dark gray heading text color */
             }
             p {
-                color: #555;
+                color: #495057; /* Gray paragraph text color */
                 line-height: 1.6;
             }
             @media only screen and (max-width: 600px) {
@@ -38,9 +38,9 @@ const confessMailSingle = (name, description) => {
     </head>
     <body>  
         <div class="container">
-            <h1>New Confession</h1>
-            <p><strong>${name}</strong> confessed:</p>
-            <p>${description}</p>
+            <h1 style="font-size: 24px; margin-bottom: 20px;">New Confession</h1>
+            <p style="font-size: 18px;"><strong>${name}</strong> confessed:</p>
+            <p style="font-size: 16px; margin-top: 10px;">${description}</p>
         </div>
     </body>
     </html>

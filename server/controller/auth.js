@@ -120,6 +120,9 @@ const login = async(req,res) => {
     user.password = undefined;
 
 
+    console.log("login fdfdfsf", user.gender);
+
+
 
     const token = jwt.sign({ _id: user._id ,gender:user.gender}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
