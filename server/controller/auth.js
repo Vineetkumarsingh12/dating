@@ -130,6 +130,7 @@ const login = async(req,res) => {
      return  res.cookie("rocket-token", token, cookieOptions).status(200).json({
         data:user,
         success: true,
+        token,
         message: "Logged in successfully",
       });
 
