@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
-import { User } from "../model/user.js";
+
+import { redirect } from "react-router-dom";
 
 const isAuthenticated = async(req, res, next) => {
     try{
@@ -8,7 +9,7 @@ const isAuthenticated = async(req, res, next) => {
   const token = req.cookies["rocket-token"];
   console.log("*********",token);
   if (!token)
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+    return redirect("https://dating-nine-rose.vercel.app/login");
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
