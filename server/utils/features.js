@@ -6,8 +6,8 @@ import { getBase64 } from "./helper.js";
 const cookieOptions = {
   maxAge: 15 * 24 * 60 * 60 * 1000,
   sameSite: "none",
-  httpOnly: false,
-  secure: false,
+  httpOnly: true,
+  secure:true,
   path: "/",
 };
 

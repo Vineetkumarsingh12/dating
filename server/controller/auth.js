@@ -118,7 +118,7 @@ const login = async(req,res) => {
     message: "Invalid email or Password",
   });
     user.password = undefined;
-
+  
 
     console.log("login fdfdfsf", user.gender);
 
@@ -128,12 +128,12 @@ const login = async(req,res) => {
         expiresIn: process.env.JWT_EXPIRE,
       });
   
-
+console.log("token",token)
 
      return  res.cookie("rocket-token", token, cookieOptions).status(200).json({
         data:user,
         success: true,
-        token,
+   token,
         message: "Logged in successfully",
       });
 
