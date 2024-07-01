@@ -13,13 +13,16 @@ import nodemailer from 'nodemailer';
               pass: process.env.PASSWORD
             }
           });
+          console.log("transporter",transporter);
           const mailOptions = {
             from:'CodingWorld - by vineet',
             to: `${to}`,
             subject:`${subject}` ,
             html: `${text}`
           };
+          console.log("mailOptions",mailOptions);
           const mailResponse=await transporter.sendMail(mailOptions);
+          console.log("mailResponse",mailResponse);
           return mailResponse;
     }catch(err){
         console.log("error in sending email");

@@ -4,6 +4,8 @@ import {confession} from "../model/confess.js";
 import { mailSender } from "../mail/mailSender.js";
 import confessMail from "../mail/confessMail.js";
 import confessMailMulti from "../mail/confessMailMulti.js"
+import {Contact} from "../model/contact.js";
+import { message } from "antd";
 
 
 
@@ -238,3 +240,26 @@ console.log("pass1");
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+export const contactUs=async(req,res)=>{
+    try{
+
+    
+    const {email,name,message}=req.body;
+
+    const cont=await Contact.create({
+        email,
+        name,
+        message
+    });
+    res.status(200).json({
+        message:"submitted"
+    })
+}catch(err){
+    res.status(500).json({
+        message:"can't submitted"
+    })
+}
+
+
+
+}

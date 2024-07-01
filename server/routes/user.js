@@ -7,14 +7,14 @@ import {allConfession} from "../controller/user.js";
 import {ownConfession} from "../controller/user.js";
 import { confessTo } from "../controller/user.js";
 import { similarPersonality} from "../controller/user.js";
-import {singleUser}  from "../controller/user.js";
+import {singleUser,contactUs}  from "../controller/user.js";
 
 
 
 const router = express.Router();
 
 // Routes accessible without authentication
-
+router.post("/contact",contactUs);
 
 // Routes that require authentication
 router.use(isAuthenticated);

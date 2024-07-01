@@ -13,7 +13,7 @@ const Navbar = () => {
     const isUser= useSelector(state => state.auth.user);
     console.log(isSmallScreen);
     return (
-        <div className='  fixed   w-full bg-transparent bg-gray-400  z-40  backdrop-blur-lg '>
+        <div className='  fixed   w-full bg-transparent bg-gray-400  z-40  backdrop-blur-lg  border-gray-900 border-b-2  '>
             <MdMenuOpen   
  className={`${isSmallScreen? "":'sm:hidden'}  bg-white m-1 text-[2rem]`} onClick={() => setIsOpen(true)} />
             <Drawer open={isOpen && isSmallScreen} onClose={() => setIsOpen(false)}>
@@ -27,8 +27,8 @@ const Navbar = () => {
 </Link>
 
                    
-                    <div className=''>About</div>
-                    <div className=''>Contact</div>
+                    <Link to="/about" className=' cursor-pointer'>About</Link>
+                    <Link to="/contact"className=' cursor-pointer' >Contact</Link>
                   {/* login ,signup, signout */}
                     {
                         !isUser && <Link to="/login" className=''>Login</Link>
@@ -46,12 +46,12 @@ const Navbar = () => {
 
             <div className='sm:flex hidden justify-between px-2 items-center  '>
             <Link to="/" className=''>
-            <img src={logo} alt="logo" className=' w-28 bg-white mt-1' />
+            <img src={logo} alt="logo" className=' w-28 bg-white p-2' />
             </Link>
-                <div className='flex gap-3'>
+                <div className='flex gap-3 items-center'>
                     
-                    <div className=''>About</div>
-                    <div className=''>Contact</div>
+                    <Link to="/about" className='  cursor-pointer'>About</Link>
+                    <Link to="/contact" className='cursor-pointer'>Contact</Link>
                     <div className=' bg-white rounded p-1'>
                   {/* login ,signup, signout */}
                     {

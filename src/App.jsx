@@ -12,6 +12,8 @@ import ConfessWrite from "./compoent/ConfessWrite";
 import SingleUser from "./compoent/SingleUser";
 import VerifyOtp from "./compoent/VerifyOtp";
 import NotFound from "./compoent/NotFound";
+import AboutUs from "./compoent/About";
+import ContactUs from "./compoent/Contact";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
   <Route path="/" element={<Home/>}/>
   <Route path="/login" element={<Login/>}/>
   <Route path="/verify-otp" element={<VerifyOtp/>}/>
+  <Route path="/about" element={<AboutUs/>}/>
+  <Route path="/contact" element={<ContactUs/>} />
   
 
   <Route path='/dashboard' element={<Protected Component={DashBoard}/>}>
